@@ -56,6 +56,7 @@
   fonts: (:),
   margin: (:),
   lang: "ru",
+  refstyle: "chicago-author-date",
   doc,
 ) = {
   // Обновляем значения по умолчанию собственными значениями.
@@ -70,9 +71,9 @@
       let page_num = counter(page).at(here()).first()
       if page_num != 1 {
         if calc.odd(page_num) {
-          align(right)[#document.title]
+          align(right)[#emph(document.title)]
         } else {
-          align(left)[#document.title]
+          align(left)[#emph(document.title)]
         }
       }
     },
@@ -88,8 +89,9 @@
     first-line-indent: (amount: indent, all: true),
   )
 
-  // Убираем переносы в заголовке документа.
+  // Убираем переносы в заголовках документа.
   show title: set par(justify: false)
+  show heading: set par(justify: false)
 
   // Отступы в списках
   set enum(indent: indent)
@@ -130,6 +132,8 @@
   // в том числе и ссылки на них.
   // https://github.com/EpicEricEE/typst-equate/issues/11#issuecomment-2633709934
   set math.equation(supplement: none, numbering: (..nums) => numbering("(1)", ..nums))
+
+  set cite(style: refstyle)
 
   // Применяем к документу функции из импортированных пакетов.
   show: par-indent
