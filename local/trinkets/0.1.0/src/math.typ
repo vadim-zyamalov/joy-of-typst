@@ -1,5 +1,3 @@
-#import "@preview/quick-maths:0.2.1": shorthands
-
 #let Ex = math.op("E")
 #let Var = math.op("Var")
 #let SE = math.op("SE")
@@ -11,15 +9,13 @@
 #let Vect = el => math.bold(math.upright(el))
 #let vv = Vect
 
+#let pm = sym.plus.minus
 #let bigast = scale(200%)[$ast.op$]
 #let nonumber = none
 
 #let trinkets = doc => {
-  show: shorthands.with(
-    ($+-$, $plus.minus$),
-    ($<=$, $lt.eq.slant$),
-    ($>=$, $gt.eq.slant$),
-  )
+  show sym.lt.eq: sym.lt.eq.slant
+  show sym.gt.eq: sym.gt.eq.slant
 
   doc
 }

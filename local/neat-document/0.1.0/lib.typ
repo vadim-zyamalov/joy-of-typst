@@ -18,32 +18,6 @@
   ),
 )
 
-// Данный код позволяет игнорировать underbrace при определении высоты скобок
-// https://forum.typst.app/t/how-to-recreate-latex-smash-and-vphantom-in-typst-math/8413/3
-// Значение параметра `delim` должно быть преваряться #, дабы typst не интерпретировал его как часть формулы,
-// ибо это за него будем делать мы.
-#let autolr(eq, delim: ("(", ")")) = context {
-  let ld = symbol(delim.at(0))
-  let rd = symbol(delim.at(1))
-  let wh = none
-  {
-    show math.underbrace: it => it.body
-    show math.overbrace: it => it.body
-    wh = measure(eq)
-  }
-  math.lr(size: wh.height, $ld eq rd$)
-}
-
-// Данная функция оборачивает печатную (блочную) функцию в нумеруемый блок.
-// Это нужно чтобы:
-// а) чтобы ссылки на формулы работали (в typst ссылки без номера не работают),
-// б) чтобы можно было нумеровать конкретные формулы.
-#let eqnum(eq, numbering: "(1)") = math.equation(
-  block: true,
-  numbering: numbering,
-  eq,
-)
-
 // Переопределение заголовков в приложениях.
 #let appendix(body, supplement: [Приложение], numbering: "A") = {
   set heading(numbering: numbering, supplement: supplement)

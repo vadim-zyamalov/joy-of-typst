@@ -1,2 +1,2 @@
-#import "math.typ": *
-#import "func.typ": *
+#import "src/math.typ": *
+#import "src/func.typ": *
