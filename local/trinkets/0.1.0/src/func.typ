@@ -4,7 +4,7 @@
 #let fill-height-with-text(min: 0.3em, max: 5em, eps: 0.1em, it) = layout(size => {
   let fits(text-size, it) = {
     (
-      measure(width: size.width, {
+      measure({
         set text(text-size)
         it
       }).height
