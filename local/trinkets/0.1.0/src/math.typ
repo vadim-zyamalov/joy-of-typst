@@ -10,6 +10,7 @@
 #let rank = math.op("rank")
 #let Vect = el => math.bold(math.upright(el))
 #let vv = Vect
+#let vert = math.mid(sym.bar.v)
 
 #let pm = sym.plus.minus
 #let bigast = scale(200%)[$ast.op$]
