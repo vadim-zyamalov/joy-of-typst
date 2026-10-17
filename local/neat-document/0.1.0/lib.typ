@@ -19,14 +19,14 @@
 )
 
 // Переопределение заголовков в приложениях.
-#let appendix(body, supplement: [Приложение], numbering: "A") = {
+#let appendix(body, supplement: [Приложение], numbering: "A.1") = {
   set heading(numbering: numbering, supplement: supplement)
   body
 }
 
 #let neat-document(
   indent: 2em,
-  leading: 1.5em,
+  leading: 1em,
   fonts: (:),
   margin: (:),
   lang: "ru",
@@ -38,17 +38,16 @@
   inner-settings.margin += margin
   inner-settings.fonts += fonts
 
+  let leading = calc.max(0.65em, leading)
+  let h-leading = calc.max(0.65em, leading / 2)
+
   // Настройки страницы.
   set page(
     paper: "a4",
     header: context {
       let page_num = counter(page).at(here()).first()
       if page_num != 1 {
-        if calc.odd(page_num) {
-          align(right)[#emph(document.title)]
-        } else {
-          align(left)[#emph(document.title)]
-        }
+        align(if calc.odd(page_num) { right } else { left })[#emph(document.title)]
       }
     },
     footer: context align(center)[#counter(page).display("1", both: false)],
@@ -64,12 +63,13 @@
   )
 
   // Убираем переносы в заголовках документа.
-  show title: set par(justify: false)
-  show heading: set par(justify: false)
+  show title: set par(justify: false, leading: h-leading)
+  show heading: set par(justify: false, leading: h-leading)
 
   // Отступы в списках
   set enum(indent: indent)
   set list(indent: indent)
+  set terms(indent: indent, hanging-indent: -indent)
 
   // Делаем блочные матрицы более сжатыми по вертикали и разрешаем разрыв блока между страницами.
   show math.equation.where(block: true): set block(breakable: true)
