@@ -13,7 +13,7 @@
 #let vert = math.mid(sym.bar.v)
 
 #let pm = sym.plus.minus
-#let bigast = scale(200%)[$ast.op$]
+#let bigast = scale(150%)[$ast.op$]
 #let nonumber = none
 
 #let Re = math.op([Re])
