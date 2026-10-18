@@ -1,4 +1,4 @@
-#import "@local/metro:0.3.1": *
+#import "@preview/zero:0.7.1": *
 
 #let Ex = math.op([E])
 #let Var = math.op([Var])
@@ -20,9 +20,10 @@
 #let Im = math.op([Im])
 
 #let trinkets = doc => {
+  set-num(decimal-separator: ",")
   show sym.lt.eq: sym.lt.eq.slant
   show sym.gt.eq: sym.gt.eq.slant
-  show regex("\d+(\.|,)\d+"): it => num(output-decimal-marker: ",")[#it]
+  show regex("\d+(\.|,)\d+"): it => num[#it]
 
   doc
 }
