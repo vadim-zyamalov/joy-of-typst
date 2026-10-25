@@ -1,3 +1,4 @@
+#import "@preview/hydra:0.6.3": hydra
 #import "@preview/parize:0.2.1": par-indent
 #import "@preview/breather:0.1.0": breathe
 #import "@preview/equate:0.3.3": equate
@@ -10,11 +11,11 @@
     outside: 1.5cm,
   ),
   fonts: (
-    main: "Noto Serif",
-    sans: "Noto Sans",
-    mono: "Noto Sans Mono",
-    math: "Noto Sans Math",
-    size: 12pt,
+    main: "PT Astra Serif",
+    sans: "PT Astra Sans",
+    mono: "Cascadia Code",
+    math: none,
+    size: 14pt,
   ),
 )
 
@@ -47,7 +48,11 @@
     header: context {
       let page_num = counter(page).at(here()).first()
       if page_num != 1 {
-        align(if calc.odd(page_num) { right } else { left })[#emph(document.title)]
+        if calc.even(page_num) {
+          align(left)[#emph(document.title)]
+        } else {
+          align(right)[#emph(hydra(1))]
+        }
       }
     },
     footer: context align(center)[#counter(page).display("1", both: false)],
@@ -83,8 +88,8 @@
 
   // Задаем шрифты.
   set text(lang: lang, font: inner-settings.fonts.main, size: inner-settings.fonts.size)
-  show raw: set text(font: inner-settings.fonts.mono)
-  show math.equation: set text(font: inner-settings.fonts.math)
+  show raw: set text(font: inner-settings.fonts.mono, size: inner-settings.fonts.size)
+  show math.equation: set text(font: inner-settings.fonts.math) if inner-settings.fonts.math != none
 
   // Добавим вертикальный пробел после заголовков.
   show heading: it => block(it + v(0.5em))

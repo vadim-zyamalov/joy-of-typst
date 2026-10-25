@@ -23,7 +23,10 @@
   set-num(decimal-separator: ",")
   show sym.lt.eq: sym.lt.eq.slant
   show sym.gt.eq: sym.gt.eq.slant
-  show regex("\d+(\.|,)\d+"): it => num[#it]
+  show math.equation: it => {
+    show regex("\d+(\.|,)\d+"): number => num[#number]
+    it
+  }
 
   doc
 }
