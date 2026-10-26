@@ -3,20 +3,17 @@
 #import "@preview/breather:0.1.0": breathe
 #import "@preview/equate:0.3.3": equate
 
-#let neat-settings = (
-  margin: (
-    top: 1.5cm,
-    bottom: 1.5cm,
-    inside: 3cm,
-    outside: 1.5cm,
-  ),
-  fonts: (
-    main: "PT Astra Serif",
-    sans: "PT Astra Sans",
-    mono: "Cascadia Code",
-    math: none,
-    size: 14pt,
-  ),
+#let neat-margin = (
+  top: 2cm,
+  bottom: 2cm,
+  inside: 3cm,
+  outside: 1cm,
+)
+#let neat-fonts = (
+  main: "PT Astra Serif",
+  sans: "PT Astra Sans",
+  mono: "Cascadia Code",
+  math: none,
 )
 
 // Переопределение заголовков в приложениях.
@@ -29,15 +26,16 @@
   indent: 2em,
   leading: 1em,
   fonts: (:),
+  size: 14pt,
+  raw-size: 0.9em,
   margin: (:),
   lang: "ru",
   refstyle: "chicago-author-date",
   doc,
 ) = {
   // Обновляем значения по умолчанию собственными значениями.
-  let inner-settings = neat-settings
-  inner-settings.margin += margin
-  inner-settings.fonts += fonts
+  let inner-margin = neat-margin + margin
+  let inner-fonts = neat-fonts + fonts
 
   let leading = calc.max(0.65em, leading)
   let h-leading = calc.max(0.65em, leading / 2)
@@ -57,7 +55,7 @@
     },
     footer: context align(center)[#counter(page).display("1", both: false)],
     columns: 1,
-    margin: inner-settings.margin,
+    margin: inner-margin,
   )
 
   // Настройки параграфов.
@@ -87,9 +85,12 @@
   show raw.where(block: true): set par(leading: 0.75em)
 
   // Задаем шрифты.
-  set text(lang: lang, font: inner-settings.fonts.main, size: inner-settings.fonts.size)
-  show raw: set text(font: inner-settings.fonts.mono, size: inner-settings.fonts.size)
-  show math.equation: set text(font: inner-settings.fonts.math) if inner-settings.fonts.math != none
+  set text(lang: lang, size: size)
+  show raw: set text(size: raw-size)
+
+  set text(font: inner-fonts.main) if inner-fonts.main != none
+  show raw: set text(font: inner-fonts.mono) if inner-fonts.mono != none
+  show math.equation: set text(font: inner-fonts.math) if inner-fonts.math != none
 
   // Добавим вертикальный пробел после заголовков.
   show heading: it => block(it + v(0.5em))
