@@ -22,6 +22,40 @@
   body
 }
 
+#let put-title() = context {
+  let authors = if document.author != none {
+    if type(document.author) == array {
+      document.author
+    } else {
+      (document.author,)
+    }
+  }
+
+  place(
+    top + center,
+    float: true,
+    scope: "parent",
+    clearance: 2em,
+  )[
+    #if document.title != none { title() }
+    #if authors != none {
+      text(size: 1em, weight: "bold")[
+        #stack(
+          dir: ttb,
+          spacing: 1em,
+          ..authors
+            .chunks(3)
+            .map(author-chunk => grid(
+              columns: (1fr,) * author-chunk.len(),
+              column-gutter: 1em,
+              ..author-chunk
+            )),
+        )
+      ]
+    }
+  ]
+}
+
 #let neat-document(
   indent: 2em,
   leading: 1em,
@@ -121,12 +155,7 @@
   show: breathe
 
   // Размещаем заголовок документа.
-  place(
-    top + center,
-    float: true,
-    scope: "parent",
-    clearance: 2em,
-  )[#title()]
+  put-title()
 
   // Тело документа.
   doc

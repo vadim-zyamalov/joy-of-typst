@@ -15,6 +15,7 @@
 #let pm = sym.plus.minus
 #let bigast = scale(150%)[$ast.op$]
 #let nonumber = none
+#let sim = sym.tilde.op
 
 #let Re = math.op([Re])
 #let Im = math.op([Im])
